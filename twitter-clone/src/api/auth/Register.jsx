@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useHistory } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { Switch } from 'react-router-dom';
+
 
 export const Register = (props) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [message, setMessage] = useState("");
+  const history = useHistory();
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -33,6 +38,8 @@ export const Register = (props) => {
       // Send the registration data to the server
       const response = await axios.post("/api/auth/register", userData);
       setMessage(response.data.message); // Server response message
+
+      history.push('/Dashboard');
     } catch (error) {
       setMessage(error.response.data.message); // Error message from the server
     }
